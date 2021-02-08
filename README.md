@@ -1,11 +1,14 @@
-# My Personal Project
+# Movie Tracker
 
-## A subtitle
+## For all the Film Enthusiasts out there.
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
 
-An example of text with **bold** and *italic* fonts.  Note that the IntelliJ markdown previewer doesn't seem to render 
-the bold and italic fonts correctly but they will appear correctly on GitHub.
+This Movie Tracker App can help you keep track of all the movies you have watched, all the movies you want to watch and 
+what your favourite movies are. You can sort through movies by 
+- Genre
+- Production year
+- Cast Members
+ 
+This app would be of great use to film enthusiasts, who watch a large amount of Films; but it can also be used by anyone
+who watches movies. This app is of interest to me because I watch a lot of Movies in my free time, and I would love to 
+keep track of all the movies I've watched and want to watch in one place, as it would be hard to keep it all in mind.
