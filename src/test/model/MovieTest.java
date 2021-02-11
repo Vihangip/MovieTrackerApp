@@ -36,7 +36,8 @@ class MovieTest {
 
     @Test
     public void testCreateMovie1() {
-        movie1 = new Movie("Avengers",2012,"Action");
+        movie1.createMovie("Avengers",2012,"Action");
+
         assertEquals("Avengers",movie1.getTitle());
         assertEquals(2012,movie1.getYear());
         assertEquals("Action",movie1.getGenre());
@@ -45,7 +46,8 @@ class MovieTest {
 
     @Test
     public void testCreateMovie2() {
-        movie1 = new Movie("Grown Ups",2010,"Comedy");
+        movie1.createMovie("Grown Ups",2010,"Comedy");
+
         assertEquals("Grown Ups",movie1.getTitle());
         assertEquals(2010,movie1.getYear());
         assertEquals("Comedy",movie1.getGenre());
