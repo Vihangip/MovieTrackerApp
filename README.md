@@ -20,7 +20,7 @@ keep track of all the movies I've watched and want to watch in one place, as it 
 - As a user, when I add a movie, I want to assign a Title, Production Year, Genre and Cast Members to the movie
 - As a user, I want to be able to delete a movie from my watched-movies list
 - As a user, I want to be able to add a movie to my to-watch-movies list
-- As a user, I want to be able to delete a movies from my to-watch-movies list
+- As a user, I want to be able to delete a movie from my to-watch-movies list
 - As a user, I want to be able to add movies **from my watched-movies list** to my favourite-movies list
 - As a user, I want to be able to add Images and Comments to each Movies in my watched-movies list
 - As a user, I want to be able to sort through any list by Production year, Cast Members and Genre.
