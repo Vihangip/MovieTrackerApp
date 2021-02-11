@@ -14,6 +14,7 @@ class MovieTest {
     private ToWatchList toWatch;
     private Movie movie1;
     private Movie movie2;
+    private Movie movie3;
 
 
     @BeforeEach
@@ -22,6 +23,7 @@ class MovieTest {
         toWatch = new ToWatchList();
         movie1 = new Movie("The Notebook", 2004, "Romance");
         movie2 = new Movie ("Parasite", 2019, "Drama");
+        movie3 = new Movie(null,0,null);
     }
 
     @Test
@@ -36,21 +38,21 @@ class MovieTest {
 
     @Test
     public void testCreateMovie1() {
-        movie1.createMovie("Avengers",2012,"Action");
+        movie3.createMovie("Avengers",2012,"Action");
 
-        assertEquals("Avengers",movie1.getTitle());
-        assertEquals(2012,movie1.getYear());
-        assertEquals("Action",movie1.getGenre());
+        assertEquals("Avengers",movie3.getTitle());
+        assertEquals(2012,movie3.getYear());
+        assertEquals("Action",movie3.getGenre());
 
     }
 
     @Test
     public void testCreateMovie2() {
-        movie1.createMovie("Grown Ups",2010,"Comedy");
+        movie3.createMovie("Grown Ups",2010,"Comedy");
 
-        assertEquals("Grown Ups",movie1.getTitle());
-        assertEquals(2010,movie1.getYear());
-        assertEquals("Comedy",movie1.getGenre());
+        assertEquals("Grown Ups",movie3.getTitle());
+        assertEquals(2010,movie3.getYear());
+        assertEquals("Comedy",movie3.getGenre());
 
     }
 
