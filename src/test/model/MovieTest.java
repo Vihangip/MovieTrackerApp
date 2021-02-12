@@ -1,17 +1,17 @@
 package model;
 
-import model.Movie;
-import model.ToWatchList;
-import model.WatchedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 //Unit test for Movies Lists
 class MovieTest {
-    private WatchedList watched;
-    private ToWatchList toWatch;
+    private MovieList watched;
+    private MovieList toWatch;
     private Movie movie1;
     private Movie movie2;
     private Movie movie3;
@@ -19,8 +19,8 @@ class MovieTest {
 
     @BeforeEach
     void runBefore() {
-        watched = new WatchedList();
-        toWatch = new ToWatchList();
+        watched = new MovieList();
+        toWatch = new MovieList();
         movie1 = new Movie("The Notebook", 2004, "Romance");
         movie2 = new Movie ("Parasite", 2019, "Drama");
         movie3 = new Movie(null,0,null);
@@ -148,6 +148,16 @@ class MovieTest {
         assertFalse(watched.contains(movie1));
         assertTrue(watched.contains(movie2));
         assertEquals(1,watched.size());
+    }
+
+    @Test
+    public void testViewMovieList() {
+        List<Movie> list1 = Arrays.asList(movie1,movie2);
+
+        watched.addMovie(movie1);
+        watched.addMovie(movie2);
+
+        assertEquals(list1,watched.getList());
     }
 
 

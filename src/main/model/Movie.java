@@ -1,40 +1,43 @@
 package model;
 
-// Represents a Movie with a Title,Production Year and Genre
+// Represents a Movie with a Title,Year and Genre
 public class Movie {
     private String title;                        // Title of the movie
-    private int proYear;                         // Production year of movie
+    private int year;                            // Release year of movie
     private String genre;                        // Genre of Movie
 
 
+    //    REQUIRES : movieName and movieGenre has non zero length, movieYear > 1800
+    //    EFFECTS  : title of movie is set to movieName, year is set to movieYear
+    //               and genre is set to movieGenre
 
-//    REQUIRES : movieName and movieGenre has non zero length, productionYear > 1800
-//    EFFECTS  : title of movie is set to movieName, proYear is set to productionYear
-//               and genre is set to movieGenre
-
-    public Movie(String movieName, int productionYear, String movieGenre) {
+    public Movie(String movieName, int movieYear, String movieGenre) {
         title = movieName;
-        proYear = productionYear;
+        year = movieYear;
         genre = movieGenre;
 
 
     }
 
-    public Movie createMovie(String name,int year, String genre) {
+    // EFFECTS : creates a new movie with given title,year and genre
+    public Movie createMovie(String name, int year, String genre) {
         this.title = name;
-        this.proYear = year;
+        this.year = year;
         this.genre = genre;
-        return new Movie(this.title, this.proYear,this.genre);
+        return new Movie(this.title, this.year, this.genre);
     }
 
+    // EFFECTS : returns movie title of given movie
     public String getTitle() {
         return title;
     }
 
+    // EFFECTS : returns released year of given movie
     public int getYear() {
-        return proYear;
+        return year;
     }
 
+    // EFFECTS : returns genre of given movie
     public String getGenre() {
         return genre;
     }
