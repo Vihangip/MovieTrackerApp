@@ -3,16 +3,13 @@ package ui;
 import model.Movie;
 import model.MovieList;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 // Movie Tracker App
 public class MovieTrackerApp {
-    private Movie movie;
     private MovieList watched;
     private MovieList toWatch;
     private Scanner input;
-    private MovieTrackerApp mapp;
 
     // EFFECTS : Runs the Movie Tracker Application
     public MovieTrackerApp() {
@@ -60,7 +57,6 @@ public class MovieTrackerApp {
     // MODIFIES: this
     // EFFECTS: initializes movie
     private void init() {
-        movie = new Movie(null, 0, null);
         watched = new MovieList();
         toWatch = new MovieList();
         input = new Scanner(System.in);
@@ -80,13 +76,17 @@ public class MovieTrackerApp {
     private void addToList() {
         MovieList selected = selectList();
 
+        //input.useDelimiter(System.lineSeparator());
+
         System.out.println("Enter Title");
         String name = input.next();
+        name += input.nextLine();
 
         System.out.println("Enter Genre");
         String genre = input.next();
+        input.nextLine();
 
-        System.out.println("Enter Production Year");
+        System.out.println("Enter Year of Release");
         int year = input.nextInt();
 
         Movie newMovie = new Movie(name, year, genre);

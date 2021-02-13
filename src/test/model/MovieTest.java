@@ -173,8 +173,14 @@ class MovieTest {
     }
 
     @Test
-    public void testGetNonExistingMovie(){
+    public void testGetMovieFromEmptyList(){
         assertEquals(null,watched.getMovie("wonder"));
+    }
+
+    @Test
+    public void testGetNonExistingMovie(){
+        watched.addMovie(movie2);
+        assertEquals(null,watched.getMovie("Avengers"));
     }
 
 

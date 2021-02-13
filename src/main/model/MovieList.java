@@ -49,12 +49,12 @@ public class MovieList {
         for (Movie m : movieList) {
             if (m.getTitle().equals(name)) {
                 return m;
-            } else {
-                return null;
             }
+            return null;
         }
         return null;
     }
+
 
     public boolean emptyList() {
         return movieList.isEmpty();
