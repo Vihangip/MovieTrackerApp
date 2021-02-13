@@ -160,6 +160,23 @@ class MovieTest {
         assertEquals(list1,watched.getList());
     }
 
+    @Test
+    public void testCheckEmptyList(){
+        assertTrue(watched.emptyList());
+    }
+
+    @Test
+    public void testGetExistingMovie(){
+        watched.addMovie(movie1);
+
+        assertEquals(movie1,watched.getMovie("The Notebook"));
+    }
+
+    @Test
+    public void testGetNonExistingMovie(){
+        assertEquals(null,watched.getMovie("wonder"));
+    }
+
 
 
 

@@ -19,11 +19,12 @@ public class MovieTrackerApp {
         runTracker();
     }
 
+
     // MODIFIES: this
     // EFFECTS: processes user input
     public void runTracker() {
         boolean keepGoing = true;
-        String command = null;
+        String command;
 
         init();
 
@@ -60,6 +61,8 @@ public class MovieTrackerApp {
     // EFFECTS: initializes movie
     private void init() {
         movie = new Movie(null, 0, null);
+        watched = new MovieList();
+        toWatch = new MovieList();
         input = new Scanner(System.in);
     }
 
@@ -90,22 +93,22 @@ public class MovieTrackerApp {
 
         selected.addMovie(newMovie);
 
-        printList(selected);
+        printSelectedList(selected);
 
 
     }
 
-    //
 
 
     // EFFECTS : prints selected list
     private void viewList() {
         MovieList selected = selectList();
 
-        if (selected == null) {
+        if (selected.emptyList()) {
             System.out.println("List is empty");
         } else {
-            printList(selected);
+            System.out.println("The following movies are currently in your list");
+            printSelectedList(selected);
         }
     }
 
@@ -115,27 +118,25 @@ public class MovieTrackerApp {
         MovieList selected = selectList();
 
         System.out.println("Enter Title");
-        String name = input.nextLine();
+        String name = input.next();
 
-        System.out.println("Enter Production Year");
-        int year = input.nextInt();
+        Movie selectedMovie = selected.getMovie(name);
 
-        System.out.println("Enter Genre");
-        String genre = input.nextLine();
+        if (selectedMovie == null) {
+            System.out.println("Movie not in list");
+        } else {
+            selected.removeMovie(selectedMovie);
+            printSelectedList(selected);
+        }
 
-        Movie newMovie = new Movie(name, year, genre);
 
-        selected.removeMovie(newMovie);
-
-
-        printList(selected);
     }
 
     // EFFECTS: prompts user to select Watched or ToWatch account and returns it
     private MovieList selectList() {
         String selection = "";  // force entry into loop
 
-        while (!(selection.equals("w") || selection.equals("tw"))) {
+        while (!(selection.equals("w") || selection.equals("t"))) {
             System.out.println("Choose a list");
             System.out.println("w for Watched");
             System.out.println("t for To Watch");
@@ -150,8 +151,10 @@ public class MovieTrackerApp {
         }
     }
 
-    // EFFECTS: prints list of movies in selected list
-    private void printList(MovieList selected) {
-        System.out.printf(" $%.2f\n", selected.getList());
+    private void printSelectedList(MovieList selectedList) {
+        for (Movie movie : selectedList.getList()) {
+            System.out.println(movie.getTitle());
+        }
     }
+
 }

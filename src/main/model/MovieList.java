@@ -45,5 +45,19 @@ public class MovieList {
         return movieList;
     }
 
+    public Movie getMovie(String name) {
+        for (Movie m : movieList) {
+            if (m.getTitle().equals(name)) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    public boolean emptyList() {
+        return movieList.isEmpty();
+    }
+
+
 }
 
