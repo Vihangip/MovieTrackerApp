@@ -49,6 +49,8 @@ public class MovieTrackerApp {
             viewList();
         } else if (command.equals("d")) {
             deleteFromList();
+        } else if (command.equals("m")) {
+            transferList();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -66,8 +68,9 @@ public class MovieTrackerApp {
     private void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\ta -> Add a Movie");
-        System.out.println("\tv -> View Lists");
         System.out.println("\td -> Delete a Movie");
+        System.out.println("\tm -> Move to Watched list");
+        System.out.println("\tv -> View Lists");
         System.out.println("\tq -> Quit");
     }
 
@@ -95,7 +98,6 @@ public class MovieTrackerApp {
 
 
     }
-
 
 
     // EFFECTS : prints selected list
@@ -128,6 +130,26 @@ public class MovieTrackerApp {
             printSelectedList(selected);
         }
 
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: moves the movie with the given title from the to-watch list to the watched list
+    private void transferList() {
+        System.out.println("Which movie did you watch?");
+        System.out.println("Please enter title");
+
+        String name = input.next();
+        name += input.nextLine();
+
+        Movie selectedMovie = toWatch.getMovie(name);
+
+        if (selectedMovie == null) {
+            System.out.println("Movie not in list");
+        } else {
+            toWatch.removeMovie(selectedMovie);
+            watched.addMovie(selectedMovie);
+        }
 
     }
 
