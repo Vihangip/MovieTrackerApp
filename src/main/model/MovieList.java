@@ -45,6 +45,8 @@ public class MovieList {
         return movieList;
     }
 
+    // EFFECTS : If the given string matches a movie title in the Movie List, returns the movie;
+    // else returns null
     public Movie getMovie(String name) {
         for (Movie m : movieList) {
             if (m.getTitle().equals(name)) {
@@ -55,7 +57,7 @@ public class MovieList {
         return null;
     }
 
-
+    // EFFECTS : returns true if the movie list is empty, false otherwise
     public boolean emptyList() {
         return movieList.isEmpty();
     }

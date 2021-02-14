@@ -72,11 +72,9 @@ public class MovieTrackerApp {
     }
 
     // MODIFIES : this
-    // EFFECTS : adds a movie to Watched list or To Watch list
+    // EFFECTS : adds a movie to the Watched list or the To-Watch list
     private void addToList() {
         MovieList selected = selectList();
-
-        //input.useDelimiter(System.lineSeparator());
 
         System.out.println("Enter Title");
         String name = input.next();
@@ -84,7 +82,7 @@ public class MovieTrackerApp {
 
         System.out.println("Enter Genre");
         String genre = input.next();
-        input.nextLine();
+        genre += input.nextLine();
 
         System.out.println("Enter Year of Release");
         int year = input.nextInt();
@@ -119,6 +117,7 @@ public class MovieTrackerApp {
 
         System.out.println("Enter Title");
         String name = input.next();
+        name += input.nextLine();
 
         Movie selectedMovie = selected.getMovie(name);
 
@@ -132,7 +131,7 @@ public class MovieTrackerApp {
 
     }
 
-    // EFFECTS: prompts user to select Watched or ToWatch account and returns it
+    // EFFECTS: prompts user to select Watched or To-Watch list and returns it
     private MovieList selectList() {
         String selection = "";  // force entry into loop
 
@@ -151,6 +150,8 @@ public class MovieTrackerApp {
         }
     }
 
+    // REQUIRES : list cannot be empty
+    // EFFECTS : returns the titles of all the movies in the given movie list
     private void printSelectedList(MovieList selectedList) {
         for (Movie movie : selectedList.getList()) {
             System.out.println(movie.getTitle());
