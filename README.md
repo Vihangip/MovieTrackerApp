@@ -22,3 +22,8 @@ keep track of all the movies I've watched, and want to watch; in one place, as i
 - As a user, I want to be able to delete a movie from my to-watch-movies list
 - As a user, I want to be able to view the watched-movies list
 - As a user, I want to be able to view the to-watch movies list.
+- As a user, I want to transfer a movie from my to-watch list to my watched list.
+- As a user, I want to be able to save my to-watch list to file
+- As a user, I want to be able to save my watched list to file
+- As a user, I want to be able to re-load my to-watch list from file
+- As a user, I want to be able to re-load my watched list from file

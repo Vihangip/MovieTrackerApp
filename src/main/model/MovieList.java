@@ -52,7 +52,6 @@ public class MovieList {
             if (m.getTitle().equals(name)) {
                 return m;
             }
-            return null;
         }
         return null;
     }
