@@ -1,0 +1,15 @@
+{
+    "Type": "Watched",
+    "Lists": [
+        {
+            "Year": 2018,
+            "Title": "Call me by your name",
+            "Genre": "Romance/Drama"
+        },
+        {
+            "Year": 2012,
+            "Title": "Diary of wimpy kid",
+            "Genre": "Family"
+        }
+    ]
+}

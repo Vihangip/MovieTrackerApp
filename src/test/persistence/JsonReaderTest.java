@@ -11,6 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// Some code is taken and/or modified from JsonSerializationDemo
 public class JsonReaderTest extends JsonTest {
 
     @Test
@@ -28,7 +29,7 @@ public class JsonReaderTest extends JsonTest {
     void testReaderEmptyWorkRoom() {
         JsonReader reader = new JsonReader();
         try {
-            MovieList movieList = reader.read("./data/testReaderEmptyWorkRoom.json");
+            MovieList movieList = reader.read("./data/testReaderEmptyMovieList.json");
             assertEquals("Watched", movieList.getName());
             assertEquals(0, movieList.size());
         } catch (IOException e) {
@@ -40,7 +41,7 @@ public class JsonReaderTest extends JsonTest {
     void testReaderGeneralWorkRoom() {
         JsonReader reader = new JsonReader();
         try {
-            MovieList movieList = reader.read("./data/testReaderGeneralWorkRoom.json");
+            MovieList movieList = reader.read("./data/testReaderGeneralMovieList.json");
             assertEquals("Watched", movieList.getName());
             List<Movie> movies = movieList.getList();
             assertEquals(2, movieList.size());

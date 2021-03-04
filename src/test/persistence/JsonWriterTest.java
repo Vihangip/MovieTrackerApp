@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Some code is taken and/or modified from JsonSerializationDemo
 public class JsonWriterTest extends JsonTest {
 
     @Test
@@ -28,12 +29,12 @@ public class JsonWriterTest extends JsonTest {
         try {
             JsonWriter writer = new JsonWriter();
             MovieList ml = new MovieList("Watched");
-            writer.open("./data/testWriterEmptyWorkroom.json");
+            writer.open("./data/testWriterEmptyMovieList.json");
             writer.write(ml);
             writer.close();
 
             JsonReader reader = new JsonReader();
-            ml = reader.read("./data/testWriterEmptyWorkroom.json");
+            ml = reader.read("./data/testWriterEmptyMovieList.json");
             assertEquals("Watched", ml.getName());
             assertEquals(0, ml.size());
         } catch (IOException e) {
@@ -52,12 +53,12 @@ public class JsonWriterTest extends JsonTest {
             watched.addMovie(m2);
 
             JsonWriter writer = new JsonWriter();
-            writer.open("./data/testWriterGeneralWorkroom.json");
+            writer.open("./data/testWriterGeneralMovieList.json");
             writer.write(watched);
             writer.close();
 
             JsonReader reader = new JsonReader();
-            watched = reader.read("./data/testWriterGeneralWorkroom.json");
+            watched = reader.read("./data/testWriterGeneralMovieList.json");
             assertEquals("Watched", watched.getName());
             List<Movie> movies =watched.getList();
             assertEquals(2, movies.size());

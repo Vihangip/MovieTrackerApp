@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 // Represents a Movie with a Title,Year and Genre
+// Some code is taken and/or modified from JsonSerializationDemo
 public class Movie implements Writable {
     private String title;                        // Title of the movie
     private int year;                            // Release year of movie

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,25 +13,29 @@ import static org.junit.jupiter.api.Assertions.*;
 //Unit test for Movies
 public class MovieListTest {
     private MovieList movieList;
-
+    private MovieList emptyList;
     private Movie movie1;
     private Movie movie2;
     private Movie movie3;
 
     @BeforeEach
     void runBefore() {
+        emptyList = new MovieList("To-Watch");
         movieList = new MovieList("Watched");
 
         movie1 = new Movie("The Notebook", 2004, "Romance");
         movie2 = new Movie ("Parasite", 2019, "Drama");
         movie3 = new Movie(null,0,null);
 
+        movieList.addMovie(movie1);
+        movieList.addMovie(movie2);
+        movieList.addMovie(movie3);
 
     }
 
     @Test
     public void testInitialSize() {
-        assertEquals(0, movieList.size());
+        assertEquals(0, emptyList.size());
     }
 
     @Test
@@ -42,87 +45,87 @@ public class MovieListTest {
 
     @Test
     public void testAddMovieToList(){
-        movieList.addMovie(movie1);
+        emptyList.addMovie(movie1);
 
-        assertTrue(movieList.contains(movie1));
-        assertEquals(1,movieList.size());
+        assertTrue(emptyList.contains(movie1));
+        assertEquals(1,emptyList.size());
     }
 
 
     @Test
     public void testAddMultipleMoviesToList() {
-        movieList.addMovie(movie1);
-        movieList.addMovie(movie2);
+        emptyList.addMovie(movie1);
+        emptyList.addMovie(movie2);
 
-        assertTrue(movieList.contains(movie1));
-        assertTrue(movieList.contains(movie2));
-        assertEquals(2,movieList.size());
+        assertTrue(emptyList.contains(movie1));
+        assertTrue(emptyList.contains(movie2));
+        assertEquals(2,emptyList.size());
     }
 
 
     @Test
     public void testDuplicateToList() {
-        movieList.addMovie(movie2);
-        movieList.addMovie(movie2);
+        emptyList.addMovie(movie2);
+        emptyList.addMovie(movie2);
 
-        assertTrue(movieList.contains(movie2));
-        assertEquals(1,movieList.size());
+        assertTrue(emptyList.contains(movie2));
+        assertEquals(1,emptyList.size());
     }
 
 
     @Test
     public void testRemoveSize1FromList() {
-        movieList.addMovie(movie1);
-        movieList.removeMovie(movie1);
+        emptyList.addMovie(movie1);
+        emptyList.removeMovie(movie1);
 
-        assertFalse(movieList.contains(movie1));
-        assertEquals(0,movieList.size());
+        assertFalse(emptyList.contains(movie1));
+        assertEquals(0,emptyList.size());
     }
 
 
     @Test
     public void testRemoveSize2FromList() {
-        movieList.addMovie(movie1);
-        movieList.addMovie(movie2);
-        movieList.removeMovie(movie1);
+        emptyList.addMovie(movie1);
+        emptyList.addMovie(movie2);
+        emptyList.removeMovie(movie1);
 
-        assertFalse(movieList.contains(movie1));
-        assertTrue(movieList.contains(movie2));
-        assertEquals(1,movieList.size());
+        assertFalse(emptyList.contains(movie1));
+        assertTrue(emptyList.contains(movie2));
+        assertEquals(1,emptyList.size());
     }
 
 
     @Test
     public void testViewMovieList() {
-        List<Movie> list1 = Arrays.asList(movie1,movie2);
+        List<Movie> list = new ArrayList<>();
+        list.add(movie1);
+        list.add(movie2);
+        list.add(movie3);
 
-        movieList.addMovie(movie1);
-        movieList.addMovie(movie2);
-
-        assertEquals(list1, movieList.getList());
+        assertEquals(list, movieList.getList());
     }
 
     @Test
     public void testCheckEmptyList(){
-        assertTrue(movieList.emptyList());
+        assertTrue(emptyList.emptyList());
     }
 
     @Test
     public void testGetExistingMovie(){
-        movieList.addMovie(movie1);
+        emptyList.addMovie(movie1);
 
-        assertEquals(movie1, movieList.getMovie("The Notebook"));
+        assertEquals(movie1, emptyList.getMovie("The Notebook"));
     }
 
     @Test
     public void testGetMovieFromEmptyList(){
-        assertEquals(null, movieList.getMovie("wonder"));
+        assertEquals(null, emptyList.getMovie("wonder"));
     }
 
     @Test
     public void testGetNonExistingMovie(){
-        movieList.addMovie(movie2);
-        assertEquals(null, movieList.getMovie("Avengers"));
+        emptyList.addMovie(movie2);
+        assertEquals(null, emptyList.getMovie("Avengers"));
     }
 
     @Test
@@ -140,10 +143,6 @@ public class MovieListTest {
 
     @Test
     public void testMovieListsToJson(){
-
-        movieList.addMovie(movie1);
-        movieList.addMovie(movie2);
-        movieList.addMovie(movie3);
 
         JSONObject jsonObj = movieList.toJson();
         JSONArray jsonList = movieList.movieListsToJson();

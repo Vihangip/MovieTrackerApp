@@ -5,14 +5,14 @@ import org.json.JSONObject;
 
 import java.io.*;
 
-// Represents a writer that writes JSON representation of movielibrary to file
+// Represents a writer that writes JSON representation of a movie list to file
+// Some code is taken and/or modified from JsonSerializationDemo
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
 
     // EFFECTS: constructs writer to write to destination file
-    public JsonWriter() {
-    }
+    public JsonWriter() {  }
 
     // MODIFIES: this
     // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
@@ -22,7 +22,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of movielibrary to file
+    // EFFECTS: writes JSON representation of a movie list to file
     public void write(MovieList ml) {
         JSONObject json = ml.toJson();
         saveToFile(json.toString(TAB));

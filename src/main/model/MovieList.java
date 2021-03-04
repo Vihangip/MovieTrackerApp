@@ -7,7 +7,9 @@ import persistence.Writable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 // Represents a list of movies
+// Some code is taken and/or modified from JsonSerializationDemo
 public class MovieList implements Writable {
     private List<Movie> movieList;       // a movie list
     private String name;
@@ -18,6 +20,7 @@ public class MovieList implements Writable {
         movieList = new ArrayList<>();
     }
 
+    // EFFECTS : returns the name of the movie list
     public String getName() {
         return name;
     }
@@ -55,6 +58,7 @@ public class MovieList implements Writable {
         return movieList;
     }
 
+    // EFFECTS : sets the movie list to the given list of movies
     public void setList(List<Movie> list) {
         movieList = list;
 
@@ -85,7 +89,7 @@ public class MovieList implements Writable {
         return json;
     }
 
-    // EFFECTS: returns movie lists in this movie library as a JSON array
+    // EFFECTS: returns the movie list as a JSON array
     public JSONArray movieListsToJson() {
         JSONArray jsonArray = new JSONArray();
 

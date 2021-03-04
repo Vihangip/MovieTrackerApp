@@ -233,6 +233,8 @@ public class MovieTrackerApp {
         }
     }
 
+    // MODIFIES : this
+    // EFFECTS : combines current to-watch list to already existing to-watch list
     public MovieList combineListsToWatch(MovieList ml) {
         for (Movie m : ml.getList()) {
             toWatch.addMovie(m);
@@ -240,6 +242,8 @@ public class MovieTrackerApp {
         return toWatch;
     }
 
+    // MODIFIES : this
+    // EFFECTS : combines current watched list to already existing watched list
     public MovieList combineListsWatched(MovieList ml) {
         for (Movie m : ml.getList()) {
             watched.addMovie(m);
