@@ -12,7 +12,7 @@ import model.Movie;
 import model.MovieList;
 import org.json.*;
 
-// Represents a reader that reads movielibrary from JSON data stored in file
+// Represents a reader that reads movie lists from JSON data stored in file
 public class JsonReader {
 
 
@@ -21,7 +21,7 @@ public class JsonReader {
 
     }
 
-    // EFFECTS: reads movielibrary from file and returns it;
+    // EFFECTS: reads a movie list from file and returns it;
     // throws IOException if an error occurs reading data from file
     public MovieList read(String source) throws IOException {
         String jsonData = readFile(source);
@@ -40,7 +40,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses movielibrary from JSON object and returns it
+    // EFFECTS: parses a movie list from JSON object and returns it
     private MovieList parseMovieList(JSONObject jsonObject) {
         String name = jsonObject.getString("Type");
         MovieList ml = new MovieList(name);
@@ -49,7 +49,7 @@ public class JsonReader {
     }
 
     // MODIFIES: ml
-    // EFFECTS: parses lists from JSON object and adds them to movielibrary
+    // EFFECTS: parses lists from JSON object and adds them to movie list
     private List<Movie> addLists(JSONObject jsonObject) {
         List<Movie> movies = new ArrayList<>();
         JSONArray jsonArray = jsonObject.getJSONArray("Lists");
@@ -60,6 +60,7 @@ public class JsonReader {
         return movies;
     }
 
+    // EFFECTS : parses movie from JSON Object
     private Movie parseMovie(JSONObject jsonObject) {
         Movie m = new Movie(jsonObject.getString("Title"),
                             jsonObject.getInt("Year"),
