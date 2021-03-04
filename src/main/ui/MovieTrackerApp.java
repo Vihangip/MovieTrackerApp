@@ -2,17 +2,29 @@ package ui;
 
 import model.Movie;
 import model.MovieList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 // Movie Tracker App
 public class MovieTrackerApp {
     private MovieList watched;
     private MovieList toWatch;
-    private Scanner input;
 
-    // EFFECTS : Runs the Movie Tracker Application
+    private static final String JSON_STORE_WATCHED = "./data/watched.json";
+    private static final String JSON_STORE_TOWATCH = "./data/towatch.json";
+    private Scanner input;
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
+
+    // EFFECTS : constructs movie library and runs the Movie Tracker Application
     public MovieTrackerApp() {
+        input = new Scanner(System.in);
+        jsonWriter = new JsonWriter();
+        jsonReader = new JsonReader();
         runTracker();
     }
 
@@ -22,6 +34,7 @@ public class MovieTrackerApp {
     public void runTracker() {
         boolean keepGoing = true;
         String command;
+        input = new Scanner(System.in);
 
         init();
 
@@ -40,6 +53,18 @@ public class MovieTrackerApp {
         System.out.println("\nGoodbye!");
     }
 
+    // EFFECTS: displays menu of options to user
+    private void displayMenu() {
+        System.out.println("\nSelect from:");
+        System.out.println("\ta -> Add a Movie");
+        System.out.println("\td -> Delete a Movie");
+        System.out.println("\tm -> Move to Watched list");
+        System.out.println("\tv -> View Lists");
+        System.out.println("\ts -> Save lists to file");
+        System.out.println("\tl -> Load lists from file");
+        System.out.println("\tq -> Quit");
+    }
+
     // MODIFIES: this
     // EFFECTS: processes user command
     private void processCommand(String command) {
@@ -51,6 +76,10 @@ public class MovieTrackerApp {
             deleteFromList();
         } else if (command.equals("m")) {
             transferList();
+        } else if (command.equals("s")) {
+            saveLists();
+        } else if (command.equals("l")) {
+            loadLists();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -59,20 +88,11 @@ public class MovieTrackerApp {
     // MODIFIES: this
     // EFFECTS: initializes movie
     private void init() {
-        watched = new MovieList();
-        toWatch = new MovieList();
+        watched = new MovieList("Watched");
+        toWatch = new MovieList("To-Watch");
         input = new Scanner(System.in);
     }
 
-    // EFFECTS: displays menu of options to user
-    private void displayMenu() {
-        System.out.println("\nSelect from:");
-        System.out.println("\ta -> Add a Movie");
-        System.out.println("\td -> Delete a Movie");
-        System.out.println("\tm -> Move to Watched list");
-        System.out.println("\tv -> View Lists");
-        System.out.println("\tq -> Quit");
-    }
 
     // MODIFIES : this
     // EFFECTS : adds a movie to the Watched list or the To-Watch list
@@ -178,6 +198,53 @@ public class MovieTrackerApp {
         for (Movie movie : selectedList.getList()) {
             System.out.println(movie.getTitle());
         }
+    }
+
+    // EFFECTS: saves the the watched list and the to-watch list to file
+    private void saveLists() {
+        try {
+            jsonWriter.open(JSON_STORE_TOWATCH);
+            jsonWriter.write(toWatch);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE_TOWATCH);
+
+            jsonWriter.open(JSON_STORE_WATCHED);
+            jsonWriter.write(watched);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE_WATCHED);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads watched list and to-watch list from file
+    private void loadLists() {
+        try {
+            toWatch = combineListsToWatch(jsonReader.read(JSON_STORE_TOWATCH));
+            System.out.println("Loaded from " + JSON_STORE_TOWATCH);
+
+            watched = combineListsWatched(jsonReader.read(JSON_STORE_WATCHED));
+            System.out.println("Loaded from " + JSON_STORE_TOWATCH);
+
+
+        } catch (IOException e) {
+            System.out.println("Unable to read from file ");
+        }
+    }
+
+    public MovieList combineListsToWatch(MovieList ml) {
+        for (Movie m : ml.getList()) {
+            toWatch.addMovie(m);
+        }
+        return toWatch;
+    }
+
+    public MovieList combineListsWatched(MovieList ml) {
+        for (Movie m : ml.getList()) {
+            watched.addMovie(m);
+        }
+        return watched;
     }
 
 }

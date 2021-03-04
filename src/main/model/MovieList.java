@@ -1,15 +1,25 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a list of movies
-public class MovieList {
+public class MovieList implements Writable {
     private List<Movie> movieList;       // a movie list
+    private String name;
 
     // EFFECTS : list is empty
-    public MovieList() {
+    public MovieList(String name) {
+        this.name = name;
         movieList = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
     }
 
     // EFFECTS : returns the number of items in the list
@@ -45,6 +55,11 @@ public class MovieList {
         return movieList;
     }
 
+    public void setList(List<Movie> list) {
+        movieList = list;
+
+    }
+
     // EFFECTS : If the given string matches a movie title in the Movie List, returns the movie;
     // else returns null
     public Movie getMovie(String name) {
@@ -62,5 +77,23 @@ public class MovieList {
     }
 
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Lists", movieListsToJson());
+        json.put("Type", name);
+        return json;
+    }
+
+    // EFFECTS: returns movie lists in this movie library as a JSON array
+    public JSONArray movieListsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Movie movie : movieList) {
+            jsonArray.put(movie.toJson());
+        }
+
+        return jsonArray;
+    }
 }
 
