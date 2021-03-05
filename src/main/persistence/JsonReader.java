@@ -17,9 +17,7 @@ public class JsonReader {
 
 
     // EFFECTS: constructs reader to read from source file
-    public JsonReader() {
-
-    }
+    public JsonReader() {    }
 
     // EFFECTS: reads a movie list from file and returns it;
     // throws IOException if an error occurs reading data from file
