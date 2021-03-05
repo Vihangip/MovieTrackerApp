@@ -18,8 +18,6 @@ public class Movie implements Writable {
         title = movieName;
         year = movieYear;
         genre = movieGenre;
-
-
     }
 
     // EFFECTS : returns movie title of given movie
