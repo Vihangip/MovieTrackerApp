@@ -13,12 +13,13 @@ import model.MovieList;
 import org.json.*;
 
 // Represents a reader that reads movie lists from JSON data stored in file
-// Some code is taken and/or modified from JsonSerializationDemo
 public class JsonReader {
 
 
     // EFFECTS: constructs reader to read from source file
-    public JsonReader() { }
+    public JsonReader() {
+
+    }
 
     // EFFECTS: reads a movie list from file and returns it;
     // throws IOException if an error occurs reading data from file

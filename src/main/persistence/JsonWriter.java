@@ -6,13 +6,13 @@ import org.json.JSONObject;
 import java.io.*;
 
 // Represents a writer that writes JSON representation of a movie list to file
-// Some code is taken and/or modified from JsonSerializationDemo
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
 
     // EFFECTS: constructs writer to write to destination file
-    public JsonWriter() {  }
+    public JsonWriter() {
+    }
 
     // MODIFIES: this
     // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
