@@ -1,7 +1,12 @@
 package ui;
 
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
-        MovieTrackerApp app = new MovieTrackerApp();
+
+        new GUI();
+        new MovieTrackerApp();
+
     }
 }
