@@ -58,16 +58,6 @@ public class GUI {
 
     public void createLabels() {
 
-        watched = new JLabel();
-        watched.setText("Watched Movies");
-        watched.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 35));
-        watched.setForeground(Color.CYAN);
-
-        toWatch = new JLabel();
-        toWatch.setText("Movies To Watch");
-        toWatch.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 35));
-        toWatch.setForeground(Color.YELLOW);
-
         addM = new JLabel();
         addM.setText("Add a movie to your lists!");
         addM.setFont(new Font("Rockwell Condensed", Font.PLAIN, 20));
@@ -126,6 +116,11 @@ public class GUI {
         watchedPanel.setBorder(border);
         watchedPanel.setLayout(null);
 
+        watched = new JLabel();
+        watched.setText("Watched Movies");
+        watched.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 35));
+        watched.setForeground(Color.CYAN);
+
         watched.setBounds(90,25,250,30);
         watchedPanel.add(watched);
 
@@ -142,6 +137,12 @@ public class GUI {
         toWatchPanel.setBounds(900, 0, 400, 800);
         toWatchPanel.setBorder(border);
         toWatchPanel.setLayout(null);
+
+
+        toWatch = new JLabel();
+        toWatch.setText("Movies To Watch");
+        toWatch.setFont(new Font("Bernard MT Condensed", Font.PLAIN, 35));
+        toWatch.setForeground(Color.YELLOW);
 
         toWatch.setBounds(90,25,250,30);
         toWatchPanel.add(toWatch);
