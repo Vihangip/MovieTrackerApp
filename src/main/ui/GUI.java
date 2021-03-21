@@ -152,6 +152,7 @@ public class GUI {
         saveToWatch.setText("Save");
         saveToWatch.setFocusable(false);
         toWatchPanel.add(saveToWatch);
+
     }
 
     public void createAddPanel() {
