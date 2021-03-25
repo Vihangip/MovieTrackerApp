@@ -1,15 +1,15 @@
 {
-    "Type": "Watched",
+    "Type": "watched",
     "Lists": [
         {
-            "Year": 3838,
-            "Title": "dhdh",
-            "Genre": "dd"
+            "Year": 1,
+            "Title": "a",
+            "Genre": "a"
         },
         {
-            "Year": 696,
-            "Title": "ddjd",
-            "Genre": "jdjd"
+            "Year": 1,
+            "Title": "a",
+            "Genre": "a"
         }
     ]
 }

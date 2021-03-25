@@ -5,12 +5,13 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
 // Represents a list of movies
 // Some code is taken and/or modified from JsonSerializationDemo
-public class MovieList implements Writable {
+public class MovieList implements Writable, Iterable<Movie> {
     private List<Movie> movieList;       // a movie list
     private String name;
 
@@ -19,6 +20,12 @@ public class MovieList implements Writable {
         this.name = name;
         movieList = new ArrayList<>();
     }
+
+//    // EFFECTS : list is empty
+//    public MovieList(String name, List<Movie> movies) {
+//        this.name = name;
+//        movieList = movies;
+//    }
 
     // EFFECTS : returns the name of the movie list
     public String getName() {
@@ -98,6 +105,11 @@ public class MovieList implements Writable {
         }
 
         return jsonArray;
+    }
+
+    @Override
+    public Iterator<Movie> iterator() {
+        return movieList.iterator();
     }
 }
 

@@ -7,6 +7,8 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 // Movie Tracker App
@@ -88,7 +90,7 @@ public class MovieTrackerApp {
     // MODIFIES: this
     // EFFECTS: initializes movie
     private void init() {
-        watched = new MovieList("Watched");
+        watched =  new MovieList("Watched");
         toWatch = new MovieList("To-Watch");
         input = new Scanner(System.in);
     }

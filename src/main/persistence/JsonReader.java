@@ -14,6 +14,7 @@ import org.json.*;
 
 // Represents a reader that reads movie lists from JSON data stored in file
 public class JsonReader {
+    List<Movie> list;
 
 
     // EFFECTS: constructs reader to read from source file
