@@ -8,21 +8,18 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 public class GUI {
-    MovieList movies;
+    MovieList watchedMovies;
+    MovieList toWatchMovies;
+
     Border border = BorderFactory.createLineBorder(Color.WHITE,3);
 
     JLabel watched;
@@ -32,11 +29,12 @@ public class GUI {
     JLabel enterTitle;
     JLabel enterYear;
     JLabel enterGenre;
-    JLabel deleteTitle;
     JLabel bgPic;
 
     JTable watchedTable;
+    JTable toWatchTable;
     JScrollPane watchedPane;
+    JScrollPane toWatchPane;
 
 
     JPanel watchedPanel;
@@ -47,22 +45,21 @@ public class GUI {
 
     JButton addToWatched;
     JButton addToToWatch;
-    JButton saveWatched;
-    JButton saveToWatch;
+    JButton save;
     JButton load;
     JButton deleteWatched;
     JButton deleteToWatch;
 
-    DefaultTableModel dtm;
-
     String[] header = {"Movie Title", "Year of release", "Genre"};
-    int row;
-    int col;
+    int watchedRow;
+    int toWatchRow;
+
+    DefaultTableModel wtm;
+    DefaultTableModel twtm;
 
     JTextField titleField;
     JTextField yearField;
     JTextField genreField;
-    JTextField deleteTitleField;
 
     JFrame frame;
 
@@ -74,43 +71,64 @@ public class GUI {
 
 
     public GUI() {
-        createTable();
+        createWatchedTable();
+        createToWatchTable();
+
         createLabels();
+
         createWatchedPanel();
         createToWatchPanel();
+
         createAddPanel();
         createDeletePanel();
         createMainPanel();
+
         createTextFields();
         createFrame();
     }
 
-    public void createTable() {
-        movies = new MovieList("watched");
-        dtm = new DefaultTableModel(header,0);
-        watchedTable = new JTable(dtm);
+    // MODIFIES : this
+    //EFFECTS : creates a JTable and Jpane for the list of Watched movies
+    public void createWatchedTable() {
+        watchedMovies = new MovieList("Watched");
+        wtm = new DefaultTableModel(header,0);
 
-        watchedTable.setBounds(20,40,200,300);
-        watchedTable.setPreferredScrollableViewportSize(new Dimension(200,350));
+        watchedTable = new JTable(wtm);
         watchedTable.setFillsViewportHeight(true);
 
         watchedPane = new JScrollPane(watchedTable);
-        watchedPane.setBounds(20,60,350,550);
-        watchedPane.setVisible(true);
-        watchedPane.revalidate();
-        watchedPane.repaint();
+        watchedPane.setBounds(20,60,350,650);;
 
+        watchedTable.setBackground(Color.BLACK);
+        watchedTable.setForeground(Color.WHITE);
     }
 
-    public void createLabels() {
+    // MODIFIES : this
+    //EFFECTS : creates a JTable and Jpane for the list of Watched movies
+    public void createToWatchTable() {
+        toWatchMovies = new MovieList("To Watch");
+        twtm = new DefaultTableModel(header,0);
 
+        toWatchTable = new JTable(twtm);
+        toWatchTable.setFillsViewportHeight(true);
+
+        toWatchPane = new JScrollPane(toWatchTable);
+        toWatchPane.setBounds(920,60,350,650);
+
+        toWatchTable.setBackground(Color.BLACK);
+        toWatchTable.setForeground(Color.WHITE);
+    }
+
+    // MODIFIES : this
+    // EFFECTS : creates all labels seen in the Add Panel and Delete Panel
+    public void createLabels() {
         addM = new JLabel();
         addM.setText("Add a movie to your lists!");
         addM.setFont(new Font("Rockwell Condensed", Font.PLAIN, 20));
         addM.setForeground(Color.GREEN);
 
         deleteM = new JLabel();
-        deleteM.setText("Delete any movie from your lists!");
+        deleteM.setText("Select a movie from a list and click respective button below!");
         deleteM.setFont(new Font("Rockwell Condensed", Font.PLAIN, 20));
         deleteM.setForeground(Color.MAGENTA);
 
@@ -129,10 +147,9 @@ public class GUI {
         enterGenre.setFont(new Font("Franklin Gothic Demi Cond", Font.PLAIN, 17));
         enterGenre.setForeground(Color.GREEN);
 
-
-
     }
 
+    // EFFECTS : sets the font, font size and colors for the JLables
     public void setTextFeatures(JTextField field) {
 
         field.setFont(new Font("Century Gothic",Font.PLAIN,14));
@@ -143,6 +160,8 @@ public class GUI {
 
     }
 
+    // MODIFIES : this
+    // EFFECTS : creates the JTextFields seen in the add panel
     public void createTextFields() {
         this.titleField = new JTextField();
         titleField.setBounds(600, 270, 250, 25);
@@ -158,14 +177,11 @@ public class GUI {
         genreField = new JTextField();
         genreField.setBounds(600,370,250,25);
         setTextFeatures(genreField);
-
-        deleteTitleField = new JTextField();
-        deleteTitleField.setBounds(600,570,250,25);
-        setTextFeatures(deleteTitleField);
-
-
     }
 
+
+    // MODIFIES : this
+    // EFFECTS : creates a panel with an image
     public void createMainPanel() {
 
         mainPanel = new JPanel();
@@ -178,46 +194,17 @@ public class GUI {
         bgPic.setIcon((imageIcon));
         bgPic.setBounds(0,0,500,300);
 
-        load = new JButton();
-        load.setBounds(150,30,200,40);
-        load.setText("Load saved Movie Lists");
-        load.setFocusable(false);
-        load.addActionListener(new LoadButton());
-        mainPanel.add(load);
+
         mainPanel.add(bgPic);
         mainPanel.validate();
 
     }
 
-    class LoadButton implements ActionListener {
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-//                toWatch = combineListsToWatch(jsonReader.read(JSON_STORE_TOWATCH));
-//                System.out.println("Loaded from " + JSON_STORE_TOWATCH);
-
-                movies = combineListsWatched(jsonReader.read(JSON_STORE_WATCHED));
-                //System.out.println("Loaded from " + JSON_STORE_TOWATCH);
-
-
-            } catch (IOException exception) {
-                System.out.println("Unable to read from file ");
-            }
-            refreshListOfWatchedMovies();
-        }
-
-        // MODIFIES : this
-        // EFFECTS : combines current watched list to already existing watched list
-        public MovieList combineListsWatched(MovieList ml) {
-            for (Movie m : ml.getList()) {
-                movies.addMovie(m);
-            }
-            return movies;
-        }
-    }
-
+    // MODIFIES : this
+    // EFFECTS : creates a panel to display watched movies
     public void createWatchedPanel() {
+
         watchedPanel = new JPanel();
         watchedPanel.setBackground(Color.BLACK);
         watchedPanel.setBounds(0, 0, 400, 800);
@@ -231,40 +218,16 @@ public class GUI {
 
         watched.setBounds(90,25,250,30);
         watchedPanel.add(watched);
-
-        saveWatched = new JButton();
-        saveWatched.setBounds(150,650,100,20);
-        saveWatched.setText("Save");
-        saveWatched.setFocusable(false);
-        saveWatched.addActionListener(new SaveWatchedButton());
-        watchedPanel.add(saveWatched);
         watchedPanel.revalidate();
         watchedPanel.repaint();
     }
 
-    class SaveWatchedButton implements ActionListener {
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-//                jsonWriter.open(JSON_STORE_TOWATCH);
-//                jsonWriter.write(toWatch);
-//                jsonWriter.close();
-//                System.out.println("Saved to " + JSON_STORE_TOWATCH);
-
-                jsonWriter.open(JSON_STORE_WATCHED);
-                jsonWriter.write(movies);
-                jsonWriter.close();
-                //System.out.println("Saved to " + JSON_STORE_WATCHED);
-            } catch (FileNotFoundException fileNotFoundException) {
-                System.out.println("Unable to write to file");
-            }
-        }
-    }
-
+    // MODIFIES : this
+    // EFFECTS : creates a panel to display to watch movies
     public void createToWatchPanel() {
         toWatchPanel = new JPanel();
-        toWatchPanel.setBackground(Color.WHITE);
+        toWatchPanel.setBackground(Color.BLACK);
         toWatchPanel.setBounds(900, 0, 400, 800);
         toWatchPanel.setBorder(border);
         toWatchPanel.setLayout(null);
@@ -278,14 +241,14 @@ public class GUI {
         toWatch.setBounds(90,25,250,30);
         toWatchPanel.add(toWatch);
 
-        saveToWatch = new JButton();
-        saveToWatch.setBounds(150,650,100,20);
-        saveToWatch.setText("Save");
-        saveToWatch.setFocusable(false);
-        toWatchPanel.add(saveToWatch);
+        toWatchPanel.revalidate();
+        toWatchPanel.repaint();
 
     }
 
+
+    // MODIFIES : this
+    // EFFECTS : creates a panel with the elements needed to add a movie to any list
     public void createAddPanel() {
 
         addPanel = new JPanel();
@@ -305,46 +268,74 @@ public class GUI {
         addPanel.add(enterGenre);
 
         addToWatched = new JButton();
-        addToWatched.setBounds(20,250,200,20);
+        addToWatched.setBounds(20,240,200,25);
         addToWatched.setText(" <<< Add to Watched Movies");
-        addToWatched.setFocusable(false);
-        addToWatched.addActionListener(new AddMovieButton());
+        addToWatched.addActionListener(new AddWatchedButton());
         addPanel.add(addToWatched);
 
         addToToWatch = new JButton();
-        addToToWatch.setBounds(250,250,200,20);
+        addToToWatch.setBounds(250,240,200,25);
         addToToWatch.setText("Add to Movies To Watch >>>");
-        addToToWatch.setFocusable(false);
+        addToToWatch.addActionListener(new AddToWatchButton());
         addPanel.add(addToToWatch);
 
     }
 
-    class AddMovieButton implements ActionListener {
+
+    // represents a button that adds a movie to the watched movies list
+    class AddWatchedButton implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String title = titleField.getText();
             int year = Integer.parseInt(yearField.getText());
             String genre = genreField.getText();
 
-            movies.addMovie(new Movie(title, year, genre));
-            refreshListOfWatchedMovies();
-
-
+            watchedMovies.addMovie(new Movie(title, year, genre));
+            refreshWatched();
         }
     }
 
-    private void refreshListOfWatchedMovies() {
+    // represents a button that adds a movie to the to watch movies button
+    class AddToWatchButton implements ActionListener {
 
-        dtm.setRowCount(0);
-        for (Movie movie : movies) {
-            Object[] objs = {movie.getTitle(), movie.getYear(), movie.getGenre()};
-            dtm.addRow(objs);
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String title = titleField.getText();
+            int year = Integer.parseInt(yearField.getText());
+            String genre = genreField.getText();
+
+            toWatchMovies.addMovie(new Movie(title,year,genre));
+            refreshToWatch();
         }
+    }
 
+
+    // MODIFIES : this
+    // EFFECTS : repopulates the Watched Table with the updated Watched movies list
+    private void refreshWatched() {
+
+        wtm.setRowCount(0);
+        for (Movie movie : watchedMovies) {
+            Object[] objs = {movie.getTitle(), movie.getYear(), movie.getGenre()};
+            wtm.addRow(objs);
+        }
         clearField();
     }
 
 
+    // MODIFIES : this
+    // EFFECTS : repopulates the ToWatch Table with the updated To Watch movies list
+    private void refreshToWatch() {
+        twtm.setRowCount(0);
+        for (Movie movie : toWatchMovies) {
+            Object[] objs = {movie.getTitle(), movie.getYear(), movie.getGenre()};
+            twtm.addRow(objs);
+        }
+        clearField();
+    }
 
+
+    // MODIFIES : this
+    // EFFECTS : clears all JTextFields and set focus to the title field
     private void clearField() {
         titleField.requestFocus();
         titleField.setText("");
@@ -353,7 +344,9 @@ public class GUI {
     }
 
 
-
+    // MODIFIES : this
+    // EFFECTS : created a JPanel with elements necessary to delete a movie from any list and contains save
+    //           and load buttons
     public void createDeletePanel() {
         deletePanel = new JPanel();
         deletePanel.setBackground(Color.BLACK);
@@ -361,82 +354,133 @@ public class GUI {
         deletePanel.setBorder(border);
         deletePanel.setLayout(null);
 
-        deleteM.setBounds(150,20,300,25);
+        deleteM.setBounds(40,20,450,25);
         deletePanel.add(deleteM);
-
-        deleteTitle = new JLabel();
-        deleteTitle.setText("Enter Title :");
-        deleteTitle.setFont(new Font("Franklin Gothic Demi Cond", Font.PLAIN, 17));
-        deleteTitle.setForeground(Color.MAGENTA);
-        deleteTitle.setBounds(40,70,100,25);
-        deletePanel.add(deleteTitle);
 
         deleteWatched = new JButton();
         deleteWatched.setText("<<<   Delete from Watched Movies");
         deleteWatched.setFocusable(false);
-        deleteWatched.setBounds(40,150,250,20);
-        deleteWatched.addMouseListener(new DeleteButtonMouseListener());
+        deleteWatched.setBounds(40,60,250,25);
+        deleteWatched.addMouseListener(new DeleteWatchedButton());
         deletePanel.add(deleteWatched);
 
         deleteToWatch = new JButton();
         deleteToWatch.setText("Delete from Movies to Watch   >>>");
         deleteToWatch.setFocusable(false);
-        deleteToWatch.setBounds(220,190,250,20);
+        deleteToWatch.setBounds(220,100,250,25);
+        deleteToWatch.addMouseListener(new DeleteToWatchButton());
         deletePanel.add(deleteToWatch);
 
+        createSaveLoadButtons();
+
 
 
     }
-    class DeleteButtonMouseListener implements MouseListener {
+
+
+    // MODIFIES : this
+    // EFFECTS : creates save and load JButtons
+    public void createSaveLoadButtons() {
+        save = new JButton();
+        save.setBounds(50,180,150,25);
+        save.setText("Save Movie Lists");
+        save.setFocusable(false);
+        save.addActionListener(new SaveButton());
+        deletePanel.add(save);
+
+        load = new JButton();
+        load.setBounds(250,180,150,25);
+        load.setText("Load Movie Lists");
+        load.setFocusable(false);
+        load.addActionListener(new LoadButton());
+        deletePanel.add(load);
+    }
+
+    // represents a JButton that saves movie lists to file
+    class SaveButton implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                jsonWriter.open(JSON_STORE_TOWATCH);
+                jsonWriter.write(toWatchMovies);
+                jsonWriter.close();
+
+                jsonWriter.open(JSON_STORE_WATCHED);
+                jsonWriter.write(watchedMovies);
+                jsonWriter.close();
+            } catch (FileNotFoundException fileNotFoundException) {
+                // System.out.println("Unable to write to file");
+            }
+        }
+    }
+
+    // represents a JButton that loads movie lists from file
+    class LoadButton implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                toWatchMovies = combineListsToWatch(jsonReader.read(JSON_STORE_TOWATCH));
+                watchedMovies = combineListsWatched(jsonReader.read(JSON_STORE_WATCHED));
+
+            } catch (IOException exception) {
+                // System.out.println("Unable to read from file ");
+            }
+            refreshWatched();
+            refreshToWatch();
+
+        }
+
+        // MODIFIES : this
+        // EFFECTS : combines current to-watch list to already existing to-watch list
+        public MovieList combineListsToWatch(MovieList ml) {
+            for (Movie m : ml.getList()) {
+                toWatchMovies.addMovie(m);
+            }
+            return toWatchMovies;
+        }
+
+        // MODIFIES : this
+        // EFFECTS : combines current watched list to already existing watched list
+        public MovieList combineListsWatched(MovieList ml) {
+            for (Movie m : ml.getList()) {
+                watchedMovies.addMovie(m);
+            }
+            return watchedMovies;
+        }
+    }
+
+    // represents a JButton that deletes a movie from the Watched movies list
+    class DeleteWatchedButton extends MouseAdapter  {
         @Override
         public void mouseClicked(MouseEvent e) {
-            row = watchedTable.getSelectedRow();
-            col = watchedTable.getColumnCount();
-
-//        titleField.setText(dtm.getValueAt(row,0).toString());
-//        yearField.setText(dtm.getValueAt(row,1).toString());
-//        genreField.setText(dtm.getValueAt(row,2).toString());
-            dtm.removeRow(row);
-
-            movies.removeMovie(movies.getMovie(dtm.getValueAt(row,0).toString()));
-            dtm.setRowCount(0);
-            refreshListOfWatchedMovies();
-
-//            for (Movie) {
-//                Object[] objs = {movies.get(i).getTitle(), movies.get(i).getYear(), movies.get(i).getGenre()};
-//                dtm.addRow(objs);
-//            }
-//
-//            clearField();
-
-
+            watchedRow = watchedTable.getSelectedRow();
+            wtm.removeRow((watchedRow + 1));
+            String movieTitle = wtm.getValueAt(watchedRow,0).toString();
+            watchedMovies.removeMovie(watchedMovies.getMovie(movieTitle));
+            refreshWatched();
         }
 
-        @Override
-        public void mousePressed(MouseEvent e) {
+    }
 
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-
-        }
+    // represents a JButton that deletes a movie from the To Watch movies list
+    class DeleteToWatchButton extends MouseAdapter {
 
         @Override
-        public void mouseEntered(MouseEvent e) {
-
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-
+        public void mouseClicked(MouseEvent e) {
+            toWatchRow = toWatchTable.getSelectedRow();
+            twtm.removeRow((toWatchRow + 1));
+            String movieTitle = twtm.getValueAt(toWatchRow,0).toString();
+            toWatchMovies.removeMovie(toWatchMovies.getMovie(movieTitle));
+            refreshToWatch();
         }
     }
 
 
+    // MODIFIES : this
+    // EFFECTS : creates a JFrame that holds all elements required for the Movie Tracker App
     public void createFrame() {
-
-
         frame = new JFrame();
         frame.setTitle("Movie Tracker App");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -448,9 +492,9 @@ public class GUI {
         ImageIcon icon = new ImageIcon("pics/Logo.jpg");
         frame.setIconImage(icon.getImage());
 
-
-
         frame.add(watchedPane);
+        frame.add(toWatchPane);
+
         frame.add(watchedPanel);
         frame.add(toWatchPanel);
         frame.add(addPanel);
@@ -460,13 +504,10 @@ public class GUI {
         frame.add(titleField);
         frame.add(yearField);
         frame.add(genreField);
-        frame.add(deleteTitleField);
 
         frame.revalidate();
         frame.repaint();
 
     }
-
-
 
 }

@@ -57,6 +57,11 @@ public class MovieList implements Writable, Iterable<Movie> {
     // EFFECTS: Movie m is removed from the MovieList
     public void removeMovie(Movie m) {
         movieList.remove(m);
+//        for (Movie movie : movieList) {
+//            if (movie.getTitle().equals(m.getTitle())) {
+//                movieList.remove(movie);
+//            }
+//        }
 
     }
 
@@ -75,7 +80,7 @@ public class MovieList implements Writable, Iterable<Movie> {
     // else returns null
     public Movie getMovie(String name) {
         for (Movie m : movieList) {
-            if (m.getTitle().equals(name)) {
+            if (m.getTitle() == name) {
                 return m;
             }
         }
