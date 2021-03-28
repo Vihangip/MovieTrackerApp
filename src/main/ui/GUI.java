@@ -315,8 +315,8 @@ public class GUI {
 
         wtm.setRowCount(0);
         for (Movie movie : watchedMovies) {
-            Object[] objs = {movie.getTitle(), movie.getYear(), movie.getGenre()};
-            wtm.addRow(objs);
+            Object[] obj = {movie.getTitle(), movie.getYear(), movie.getGenre()};
+            wtm.addRow(obj);
         }
         clearField();
     }
@@ -327,8 +327,8 @@ public class GUI {
     private void refreshToWatch() {
         twtm.setRowCount(0);
         for (Movie movie : toWatchMovies) {
-            Object[] objs = {movie.getTitle(), movie.getYear(), movie.getGenre()};
-            twtm.addRow(objs);
+            Object[] obj = {movie.getTitle(), movie.getYear(), movie.getGenre()};
+            twtm.addRow(obj);
         }
         clearField();
     }
