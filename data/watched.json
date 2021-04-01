@@ -1,20 +1,8 @@
 {
     "Type": "Watched",
-    "Lists": [
-        {
-            "Year": 11,
-            "Title": "aa",
-            "Genre": "aa"
-        },
-        {
-            "Year": 44,
-            "Title": "dd",
-            "Genre": "dd"
-        },
-        {
-            "Year": 55,
-            "Title": "ee",
-            "Genre": "ee"
-        }
-    ]
+    "Lists": [{
+        "Year": 352,
+        "Title": "wrgae",
+        "Genre": "dsfagva"
+    }]
 }

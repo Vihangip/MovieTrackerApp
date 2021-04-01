@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.MovieNotInListException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -112,20 +113,32 @@ public class MovieListTest {
 
     @Test
     public void testGetExistingMovie(){
-        emptyList.addMovie(movie1);
-
-        assertEquals(movie1, emptyList.getMovie("The Notebook"));
+        try {
+            movieList.getMovie("The Notebook");
+            assertEquals(movie1, movieList.getMovie("The Notebook"));
+        } catch (MovieNotInListException e) {
+            fail();
+        }
     }
 
     @Test
     public void testGetMovieFromEmptyList(){
-        assertEquals(null, emptyList.getMovie("wonder"));
+        try {
+            emptyList.getMovie("Wonder");
+            fail();
+        } catch (MovieNotInListException e) {
+            //expected
+        }
     }
 
     @Test
     public void testGetNonExistingMovie(){
-        emptyList.addMovie(movie2);
-        assertEquals(null, emptyList.getMovie("Avengers"));
+        try {
+            movieList.getMovie("Avengers");
+            fail();
+        } catch (MovieNotInListException e) {
+            //expected
+        }
     }
 
     @Test

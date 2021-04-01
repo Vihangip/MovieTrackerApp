@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.MovieNotInListException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -20,12 +21,6 @@ public class MovieList implements Writable, Iterable<Movie> {
         this.name = name;
         movieList = new ArrayList<>();
     }
-
-//    // EFFECTS : list is empty
-//    public MovieList(String name, List<Movie> movies) {
-//        this.name = name;
-//        movieList = movies;
-//    }
 
     // EFFECTS : returns the name of the movie list
     public String getName() {
@@ -57,12 +52,6 @@ public class MovieList implements Writable, Iterable<Movie> {
     // EFFECTS: Movie m is removed from the MovieList
     public void removeMovie(Movie m) {
         movieList.remove(m);
-//        for (Movie movie : movieList) {
-//            if (movie.getTitle().equals(m.getTitle())) {
-//                movieList.remove(movie);
-//            }
-//        }
-
     }
 
     // EFFECTS : returns the MovieList
@@ -77,14 +66,15 @@ public class MovieList implements Writable, Iterable<Movie> {
     }
 
     // EFFECTS : If the given string matches a movie title in the Movie List, returns the movie;
-    // else returns null
-    public Movie getMovie(String name) {
+    // else throws MovieNotInListException
+    public Movie getMovie(String name) throws MovieNotInListException {
         for (Movie m : movieList) {
             if (m.getTitle() == name) {
                 return m;
             }
         }
-        return null;
+        throw new  MovieNotInListException("Movie not in list!");
+
     }
 
     // EFFECTS : returns true if the movie list is empty, false otherwise

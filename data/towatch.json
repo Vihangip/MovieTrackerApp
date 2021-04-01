@@ -1,15 +1,8 @@
 {
     "Type": "To Watch",
-    "Lists": [
-        {
-            "Year": 22,
-            "Title": "bb",
-            "Genre": "bb"
-        },
-        {
-            "Year": 33,
-            "Title": "cc",
-            "Genre": "cc"
-        }
-    ]
+    "Lists": [{
+        "Year": 1142,
+        "Title": "dsbsd",
+        "Genre": "aga"
+    }]
 }

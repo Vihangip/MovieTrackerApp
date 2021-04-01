@@ -2,6 +2,7 @@ package ui;
 
 import model.Movie;
 import model.MovieList;
+import model.exceptions.MovieNotInListException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -458,7 +459,11 @@ public class GUI {
             watchedRow = watchedTable.getSelectedRow();
             wtm.removeRow((watchedRow + 1));
             String movieTitle = wtm.getValueAt(watchedRow,0).toString();
-            watchedMovies.removeMovie(watchedMovies.getMovie(movieTitle));
+            try {
+                watchedMovies.removeMovie(watchedMovies.getMovie(movieTitle));
+            } catch (MovieNotInListException movieNotInListException) {
+                movieNotInListException.printStackTrace();
+            }
             refreshWatched();
         }
 
@@ -472,7 +477,11 @@ public class GUI {
             toWatchRow = toWatchTable.getSelectedRow();
             twtm.removeRow((toWatchRow + 1));
             String movieTitle = twtm.getValueAt(toWatchRow,0).toString();
-            toWatchMovies.removeMovie(toWatchMovies.getMovie(movieTitle));
+            try {
+                toWatchMovies.removeMovie(toWatchMovies.getMovie(movieTitle));
+            } catch (MovieNotInListException movieNotInListException) {
+                movieNotInListException.printStackTrace();
+            }
             refreshToWatch();
         }
     }

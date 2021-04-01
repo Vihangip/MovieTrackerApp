@@ -2,6 +2,7 @@ package ui;
 
 import model.Movie;
 import model.MovieList;
+import model.exceptions.MovieNotInListException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -23,7 +24,7 @@ public class MovieTrackerApp {
     private JsonWriter jsonWriter;
 
     // EFFECTS : constructs movie library and runs the Movie Tracker Application
-    public MovieTrackerApp() {
+    public MovieTrackerApp() throws MovieNotInListException {
         input = new Scanner(System.in);
         jsonWriter = new JsonWriter();
         jsonReader = new JsonReader();
@@ -33,7 +34,7 @@ public class MovieTrackerApp {
 
     // MODIFIES: this
     // EFFECTS: processes user input
-    public void runTracker() {
+    public void runTracker() throws MovieNotInListException {
         boolean keepGoing = true;
         String command;
         input = new Scanner(System.in);
@@ -69,7 +70,7 @@ public class MovieTrackerApp {
 
     // MODIFIES: this
     // EFFECTS: processes user command
-    private void processCommand(String command) {
+    private void processCommand(String command) throws MovieNotInListException {
         if (command.equals("a")) {
             addToList();
         } else if (command.equals("v")) {
@@ -136,7 +137,7 @@ public class MovieTrackerApp {
 
     // MODIFIES: this
     // EFFECTS: removes a movie from selected list
-    private void deleteFromList() {
+    private void deleteFromList() throws MovieNotInListException {
         MovieList selected = selectList();
 
         System.out.println("Enter Title");
@@ -157,7 +158,7 @@ public class MovieTrackerApp {
 
     // MODIFIES: this
     // EFFECTS: moves the movie with the given title from the to-watch list to the watched list
-    private void transferList() {
+    private void transferList() throws MovieNotInListException {
         System.out.println("Which movie did you watch?");
         System.out.println("Please enter title");
 
