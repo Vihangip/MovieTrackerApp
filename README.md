@@ -27,3 +27,8 @@ keep track of all the movies I've watched, and want to watch; in one place, as i
 - As a user, I want to be able to save my watched list to file
 - As a user, I want to be able to re-load my to-watch list from file
 - As a user, I want to be able to re-load my watched list from file
+
+## Phase 4 : Task 2
+Designed the MovieList class to be robust by making it throw an exception. The getMovie method throws the
+ MovieNotInListException if the wanted movie does not exist in the Movie List. This exception has also been tested
+ in the MovieListTest class.
