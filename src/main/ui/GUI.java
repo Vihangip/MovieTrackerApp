@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+// A GUI that represents the Movie Tracker App
 public class GUI {
     MovieList watchedMovies;
     MovieList toWatchMovies;
@@ -70,7 +71,7 @@ public class GUI {
     private static final String JSON_STORE_WATCHED = "./data/watched.json";
     private static final String JSON_STORE_TOWATCH = "./data/towatch.json";
 
-
+// Constructs GUI
     public GUI() {
         createWatchedTable();
         createToWatchTable();
