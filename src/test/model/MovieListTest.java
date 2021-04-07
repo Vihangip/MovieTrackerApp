@@ -172,4 +172,19 @@ public class MovieListTest {
 
     }
 
+    @Test
+    public void testIteratorEmptyList() {
+        assertFalse(emptyList.iterator().hasNext());
+    }
+
+    @Test
+    public void testIterator() {
+        assertTrue(movieList.iterator().hasNext());
+    }
+
+    @Test
+    public void testIteratorGetNextMovie() {
+        assertEquals(movie1,movieList.iterator().next());
+    }
+
 }
