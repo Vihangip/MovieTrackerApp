@@ -71,7 +71,7 @@ public class GUI {
     private static final String JSON_STORE_WATCHED = "./data/watched.json";
     private static final String JSON_STORE_TOWATCH = "./data/towatch.json";
 
-// Constructs GUI
+// Constructs GUI5
     public GUI() {
         createWatchedTable();
         createToWatchTable();

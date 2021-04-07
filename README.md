@@ -32,3 +32,6 @@ keep track of all the movies I've watched, and want to watch; in one place, as i
 Designed the MovieList class to be robust by making it throw an exception. The getMovie method throws the
  MovieNotInListException if the wanted movie does not exist in the Movie List. This exception has also been tested
  in the MovieListTest class.
+ 
+ ## Phase 4 : Task 3
+- I would not refactor anything as I believe the design is pretty good as it is.
